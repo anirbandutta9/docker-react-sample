@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t anirban9/react-K8s-app .'
+        sh 'docker build -t anirban9/react-k8s-app .'
       }
     }
     stage('Login') {
@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push anirban9/react-K8s-app'
+        sh 'docker push anirban9/react-k8s-app'
       }
     }
   }
