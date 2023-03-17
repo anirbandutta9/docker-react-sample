@@ -17,5 +17,6 @@ spec:
       containers:
         - name: react-app
           image: anirban9/react-k8s-app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
