@@ -23,11 +23,9 @@ pipeline {
       }
     }
     stage('Deploy to K8s GKE') {
-      agent {label 'batman'}
+      agent {label 'k8s-agent'}
       steps {
-        script {
-          kubernetesDeploy(configs: "./k8s/*.yaml", kubeconfigId: "gke-cluster101")
-        }
+        step([$class: 'KubernetesEngineBuilder', projectId: kubernetes-380604, clusterName: batman, location: us-central1-c, manifestPattern: './k8s/*.yaml', credentialsId: gke-cluster101, verifyDeployments: true])
       }
     }
   }
