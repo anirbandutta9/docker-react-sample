@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t anirban9/react-k8s-app:"${env.BUILD_ID}" . '
+        sh 'docker build -t anirban9/react-k8s-app:$BUILD_ID . '
       }
     }
     stage('Login') {
@@ -19,21 +19,21 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push anirban9/react-k8s-app:"${env.BUILD_ID}" '
+        sh 'docker push anirban9/react-k8s-app:$BUILD_ID '
       }
     }
     stage('Deploy locally') {
       steps {
         sh '''docker stop $(docker ps -a -q)
              docker rm $(docker ps -a -q)
-             docker pull anirban9/react-k8s-app:"${env.BUILD_ID}"
-             docker run -p 80:80 -d anirban9/react-k8s-app:"${env.BUILD_ID}" '''
+             docker pull anirban9/react-k8s-app:$BUILD_ID
+             docker run -p 80:80 -d anirban9/react-k8s-app:$BUILD_ID '''
       }
     }
 
    stage('Deploy to GKE') {
    steps{
-         sh "sed -i 's/react-k8s-app:latest/react-k8s-app:${env.BUILD_ID}/g' ./k8s/deployment.yaml"
+         sh "sed -i 's/react-k8s-app:latest/react-k8s-app:$BUILD_ID/g' ./k8s/deployment.yaml"
          step([$class: 'KubernetesEngineBuilder', projectId: 'kubernetes-380604', clusterName: 'batman', location: 'us-central1-c', manifestPattern: './k8s/', credentialsId: 'gke-cluster101' , verifyDeployments: true])
             }
    }
