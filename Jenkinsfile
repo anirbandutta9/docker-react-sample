@@ -22,14 +22,14 @@ pipeline {
         sh 'docker push anirban9/react-k8s-app'
       }
     }
-    stage('Deploy to K8s GKE') {
-      agent {label 'k8s-agent'}
+   stage('Deploy App') {
+     agent {label 'k8s-agent'}
       steps {
-      script {
+        script {
           kubernetesDeploy(configs: "./k8s/*.yaml", kubeconfigId: "gke-cluster101")
         }
-    }
-  }
+      }
+   }
   post {
     always {
       sh 'docker logout'
