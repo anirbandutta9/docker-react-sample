@@ -22,6 +22,15 @@ pipeline {
         sh 'docker push anirban9/react-k8s-app'
       }
     }
+    stage('Deploy locally') {
+      steps {
+        sh '''docker stop $(docker ps -a -q)
+             docker rm $(docker ps -a -q)
+             docker pull anirban9/react-k8s-app 
+             docker run -p 80:80 -d anirban9/react-k8s-app '''
+      }
+    }
+
    stage('Deploy to GKE') {
    steps{
          step([$class: 'KubernetesEngineBuilder', projectId: 'kubernetes-380604', clusterName: 'batman', location: 'us-central1-c', manifestPattern: './k8s/', credentialsId: 'gke-cluster101' , verifyDeployments: true])
