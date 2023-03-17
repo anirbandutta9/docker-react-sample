@@ -24,6 +24,7 @@ pipeline {
     }
     stage('Deploy to K8s GKE') {
       agent {label 'k8s-agent'}
+      steps {
       script {
           kubernetesDeploy(configs: "./k8s/*.yaml", kubeconfigId: "gke-cluster101")
         }
