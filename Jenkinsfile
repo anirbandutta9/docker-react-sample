@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t anirban9/react-k8s-app:'${env.BUILD_ID}' .'
+        sh 'docker build -t anirban9/react-k8s-app:'${env.BUILD_ID}' . '
       }
     }
     stage('Login') {
@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push anirban9/react-k8s-app:'${env.BUILD_ID}''
+        sh 'docker push anirban9/react-k8s-app:'${env.BUILD_ID}' '
       }
     }
     stage('Deploy locally') {
