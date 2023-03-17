@@ -22,15 +22,7 @@ pipeline {
         sh 'docker push anirban9/react-k8s-app'
       }
     }
-   stage('Deploy App') {
-     agent {label 'k8s-agent'}
-      steps {
-        script {
-          kubernetesDeploy(configs: "./k8s/*.yaml", kubeconfigId: "gke-cluster101")
-        }
-      }
-   }
-   stage('Deploy App') {
+   stage('Deploy to GKE') {
    agent {label 'k8s-agent'}
    steps{
          step([$class: 'KubernetesEngineBuilder', projectId: 'kubernetes-380604', clusterName: 'batman', location: 'us-central1-c', manifestPattern: './k8s/*.yaml', credentialsId: 'gke-cluster101' , verifyDeployments: true])
