@@ -30,5 +30,11 @@ pipeline {
         }
       }
    }
+   stage('Deploy App') {
+   agent {label 'k8s-agent'}
+   steps{
+         step([$class: 'KubernetesEngineBuilder', projectId: 'kubernetes-380604', clusterName: 'batman', location: 'us-central1-c', manifestPattern: './k8s/*.yaml', credentialsId: 'gke-cluster101' , verifyDeployments: true])
+            }
+   }
   }
 }
