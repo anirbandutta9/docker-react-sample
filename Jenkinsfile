@@ -24,7 +24,7 @@ pipeline {
     }
    stage('Deploy to GKE') {
    steps{
-         step([$class: 'KubernetesEngineBuilder', projectId: 'kubernetes-380604', clusterName: 'batman', location: 'us-central1-c', manifestPattern: './k8s/deployment.yaml', credentialsId: 'gke-cluster101' , verifyDeployments: true])
+         step([$class: 'KubernetesEngineBuilder', projectId: 'kubernetes-380604', clusterName: 'batman', location: 'us-central1-c', manifestPattern: './k8s/', credentialsId: 'gke-cluster101' , verifyDeployments: true])
             }
    }
   }
