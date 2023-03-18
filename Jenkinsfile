@@ -10,6 +10,7 @@ pipeline {
     stage('Build') {
       steps {
         sh 'docker build -t anirban9/react-k8s-app:$BUILD_ID . '
+        sh 'docker tag anirban9/react-k8s-app:$BUILD_ID anirban9/react-k8s-app:latest'
       }
     }
     stage('Login') {
@@ -20,6 +21,7 @@ pipeline {
     stage('Push') {
       steps {
         sh 'docker push anirban9/react-k8s-app:$BUILD_ID '
+        sh 'docker push anirban9/react-k8s-app:latest '
       }
     }
     stage('Deploy locally') {
